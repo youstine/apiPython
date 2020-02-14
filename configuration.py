@@ -1,14 +1,9 @@
-conf = {
-    'url_root' : "http://localhost:5000/",
-    'url_api': "http://localhost:5000/api",
-    'url_add' : "http://localhost:5000/add",
-    'url_list' : "http://localhost:5000/items",
-    'log_directory' : "\Logs"
-}
+from constantes import CONSTANTE
+
 
 class Configuration:
     def __init__(self):
-        self.__config = conf
+        self.__config = CONSTANTE.CONF
 
     def _get_value(self, property_name):
         if property_name not in self.__config.keys():
@@ -24,20 +19,20 @@ class FlaskConfig(Configuration):
 
     @property
     def url_root(self):
-        return self._get_value("url_root")
+        return self._get_value("URL_ROOT")
 
     @property
     def url_api(self):
-        return self._get_value("url_api")
+        return self._get_value("URL_API")
 
     @property
     def url_add(self):
-        return self._get_value("url_add")
+        return self._get_value("URL_ADD")
 
     @property
     def url_list(self):
-        return self._get_value("url_list")
+        return self._get_value("URL_LIST")
 
     @property
     def log_directory(self):
-        return self._get_value("log_directory")
+        return self._get_value("LOG_DIRECTORY")
