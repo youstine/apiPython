@@ -8,7 +8,7 @@ class InterventionJsonRepository(InterventionRepository):
 
     def save(self, todo_task):
         try:
-            with open('todo_data.json', 'a') as f:  # externaliser
+            with open('intervention_data.json', 'a') as f:  # externaliser
                 str_task = json.dumps(todo_task, cls=InterventionJsonEncoder)
                 f.write(str_task)
             return True

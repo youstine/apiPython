@@ -1,7 +1,8 @@
 class CONSTANTE:
     DB = {
         'DB_CONNECTION' : "",
-        'DB_CONNECTION_URI' : ""
+        'DB_CONNECTION_URI' : "",
+        'CONNECTION_STRING' : "C:\\GUILDE DE DEV\\EPSI\\Python\\Code\\ToDo\\Tests\\todo.db"
     }
 
     CONF = {

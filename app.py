@@ -11,7 +11,7 @@ app = Flask(__name__)
 def hello_world():
     return 'Bienvenue dans notre api Python'
 
-CONNECTION_STRING = ""
+CONNECTION_STRING = "C:\\GUILDE DE DEV\\EPSI\\Python\\Code\\ToDo\\Tests\\todo.db"
 
 @app.route("/add", methods=['POST'])
 def add():
