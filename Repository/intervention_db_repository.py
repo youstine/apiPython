@@ -27,8 +27,8 @@ class InterventionDbRepository(InterventionRepository):
     def __commit(self):
         self.__conn.commit()
 
-    def save(self, todo_task):
-        insertCmd = f"INSERT INTO INTERVENTION(name, age) VALUES('{todo_task.name}', '{todo_task.age}')"
+    def save(self, intervention):
+        insertCmd = f"INSERT INTO INTERVENTION(client_name, tech_name,intervention_date, intervention_type, description) VALUES('{intervention.client_name}', '{intervention.tech_name}','{intervention.intervention_date}','{intervention.intervention_type}','{intervention.desecription}')"
         self.__execute_commande(insertCmd)
         self.__commit()
         return True

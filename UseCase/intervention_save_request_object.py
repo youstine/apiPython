@@ -3,19 +3,22 @@ from Domain.intervention import Intervention
 
 class InterventionSaveRequestObject:
     def __init__(self, data):
-        if "name" not in data:
-            raise Exception("Le nom est manquant")
-        if "age" not in data:
-            raise Exception("l'âge est manquant")
+        if "client_name" not in data:
+            raise Exception("Le nom du client est manquant(client_name)")
+        if "tech_name" not in data:
+            raise Exception("Le nom du technicien est manquant(tech_name)")
+        if "intervention_date" not in data:
+            raise Exception("la date d'intervention est manquante(intervention_date)")
+        if "intervention_type" not in data:
+            raise Exception("le type d'intervention est manquant (intervention_type)")
+        if "description" not in data:
+            raise Exception("la description de l'intervention est manquante (description)")
         else:
-            self.__name = data["name"]
-            self.__age = data["age"]
-    @property
-    def name(self):
-        return self.__name
-    @property
-    def age(self):
-        return self.__age
+            self.__client_name = data["client_name"]
+            self.__tech_name = data["tech_name"]
+            self.__intervention_date = data["intervention_date"]
+            self.__intervention_type = data["intervention_type"]
+            self.__description = data["description"]
 
     def get_intervention(self):
-        return Intervention(self.name,self.age)
+        return Intervention(self)
