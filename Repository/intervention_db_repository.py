@@ -38,5 +38,13 @@ class InterventionDbRepository(InterventionRepository):
         self.__execute_commande(readCmd)
         lstRecords = []
         for row in self.cursor:
-            lstRecords.append('{0} , {1} , {2}'.format(row[0], row[1], row[2]))
+            lstRecords.append(dict_factory(self.cursor, row))
+            print(lstRecords)
         return lstRecords
+
+
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d

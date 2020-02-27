@@ -12,14 +12,6 @@ app = Flask(__name__)
 
 app.config["DEBUG"] = True
 
-
-def dict_factory(cursor, row):
-    d = {}
-    for idx, col in enumerate(cursor.description):
-        d[col[0]] = row[idx]
-    return d
-
-
 @app.route('/', methods=['GET'])
 def home():
     return 'Bienvenue dans notre api Python'
@@ -49,6 +41,7 @@ def post():
         # On save l'objet en bdd?
         uc = InterventionSaveUseCase(repo)
         response = uc.execute(task_request.get_intervention())
+        print(response.return_value)
         return "WORKS"
     except Exception as exc:
         print("BUG? " + str(exc))
