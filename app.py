@@ -27,7 +27,7 @@ def get_all_interventions():
 @app.route('/interventions/id/<id_intervention>', methods=['GET'])
 def get_intervention_by_id(id_intervention):
     # On crée une connexion à la bdd
-    repo = InterventionDbRepository(CONNECTION_STRING)
+    repo = InterventionDbRepository(CONSTANTE.CONNECTION_STRING)
     # On execute un getAll
     intervention = repo.get_intervention_by_id(id_intervention)
     return jsonify(intervention)
