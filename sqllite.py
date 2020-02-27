@@ -9,8 +9,11 @@ class ManageSqlLite:
     def create_table(self, tableName):
         sqlCmd = f"CREATE TABLE IF NOT EXISTS {tableName}(" \
                  f" id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE," \
-                 f" name TEXT," \
-                 f" age INTEGER)"
+                 f" client_name TEXT," \
+                 f" tech_name TEXT," \
+                 f" intervention_date DATE," \
+                 f" intervention_type TEXT," \
+                 f" description TEXT)"
         self.execute_commande(sqlCmd)
 
     def execute_commande(self, sqlCommand):
@@ -27,33 +30,24 @@ class ManageSqlLite:
         self.conn.commit()
 
     def insert_interv_in_database(self, interv):
-        self.cursor.execute("""INSERT INTO intervention(name, age) VALUES(:name, :age)""", interv)
-
-    #def insert_tech_in_database(self, tech):
-    #   self.cursor.execute("""INSERT INTO technicien(nomTech, service, number) VALUES(:nomTech, :service, :number)""",
-    #                       tech)
+        self.cursor.execute("""INSERT INTO intervention(client_name, tech_name, intervention_date, intervention_type, 
+        description) VALUES(:client_name, :tech_name, :intervention_date, :intervention_type, :description)""", interv)
 
 
 bdd = ManageSqlLite("ma_base.db")
 bdd.create_table("intervention")
-bdd.create_table("technicien")
 
-list_intervention = [{"name": "Laurent", "age": 46}, {"name": "Greg", "age": 42}, {"name": "Clément", "age": 28}]
+list_intervention = [
+    {"client_name": "Laurent", "tech_name": "Bob", "intervention_date": "2020/11/01", "intervention_type": "réparation",
+     "description": "Le client à une fuite avec sa machine à laver"},
+    {"client_name": "Natacha", "tech_name": "Dorian", "intervention_date": "2020/06/23", "intervention_type": "diagnostique",
+     "description": "Le client demande une intervention pour vérifier son lave vaisselle"}
+]
 for interv in list_intervention:
     bdd.insert_interv_in_database(interv)
 bdd.commit()
 lstInterv = bdd.return_liste_record("SELECT * FROM intervention")
 print(lstInterv)
-
-#list_technicien = [{"nomTech": "Bernard", "service": "chauffage", "number": "0652255555"},
-                  # {"nomTech": "Nada", "service": "plomberie", "number": "0652255555"}]
-#for tech in list_technicien:
-    #bdd.insert_tech_in_database(tech)
-#bdd.commit()
-
-
-#lstTech = bdd.return_liste_record("SELECT * FROM technicien")
-#print(listTech)
 
 #
 # cursor.execute("""
