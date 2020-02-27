@@ -9,4 +9,4 @@ class InterventionSaveUseCase:
 
     def execute(self, request_object):
         self.repository.save(request_object)
-        return InterventionSaveResponseObject(True)
+        return True

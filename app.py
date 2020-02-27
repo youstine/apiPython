@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify
+
+from Domain.intervention import Intervention
 from Repository.intervention_db_repository import InterventionDbRepository
 from UseCase.intervention_save_request_object import InterventionSaveRequestObject
 from UseCase.intervention_save_usecase import InterventionSaveUseCase
@@ -37,15 +39,12 @@ def post_intervention():
     try:
         # On récupère le json de la requête
         request_content = request.get_json()
-        # On save le Json dans un objet Intervention
-        task_request = InterventionSaveRequestObject(request_content)
         # On crée une connexion à la bdd
         repo = InterventionDbRepository(CONSTANTE.CONNECTION_STRING)
-        # On save l'objet en bdd?
+        # On instancie une requête
         uc = InterventionSaveUseCase(repo)
-        response = uc.execute(task_request.get_intervention())
-        # print(response.return_value)
-        return "WORKS"
+        # On retourne le résultat de l'execution de la requête
+        return str(uc.execute(Intervention(request_content)))
     except Exception as exc:
         # print("BUG? " + str(exc))
         print("Error : " + str(exc))
