@@ -25,13 +25,15 @@ def home():
     return 'Bienvenue dans notre api Python'
 
 
-CONNECTION_STRING = os.path.expanduser(CONSTANTE.CONNECTION_STRING)
+CONNECTION_STRING = CONSTANTE.CONNECTION_STRING
 
 
 @app.route('/interventions', methods=['GET'])
 def api_all():
-    ManageSqlLite('ma_base.bd')
-    all_interventions = ManageSqlLite.return_liste_record()
+    # On crée une connexion à la bdd
+    repo = InterventionDbRepository(CONNECTION_STRING)
+    #On execute un getAll
+    all_interventions = repo.get_all()
     return jsonify(all_interventions)
 
 
@@ -42,7 +44,7 @@ def post():
         request_content = request.get_json()
         # On save le Json dans un objet Intervention
         task_request = InterventionSaveRequestObject(request_content)
-        # On se connecte à la bdd
+        # On crée une connexion à la bdd
         repo = InterventionDbRepository(CONNECTION_STRING)
         # On save l'objet en bdd?
         uc = InterventionSaveUseCase(repo)

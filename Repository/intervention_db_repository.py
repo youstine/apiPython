@@ -34,5 +34,9 @@ class InterventionDbRepository(InterventionRepository):
         return True
 
     def get_all(self):
-        readCmd = f"SELECT * FROM USERS"
+        readCmd = f"SELECT * FROM INTERVENTION"
         self.__execute_commande(readCmd)
+        lstRecords = []
+        for row in self.cursor:
+            lstRecords.append('{0} , {1} , {2}'.format(row[0], row[1], row[2]))
+        return lstRecords
