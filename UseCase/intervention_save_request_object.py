@@ -1,13 +1,21 @@
+from Domain.intervention import Intervention
+
+
 class InterventionSaveRequestObject:
-    def __init__(self, datatask):
-        if "description" not in datatask:
-            raise Exception("pas de description")
+    def __init__(self, data):
+        if "name" not in data:
+            raise Exception("Le nom est manquant")
+        if "age" not in data:
+            raise Exception("l'âge est manquant")
         else:
-            self.__description = datatask["description"]
-
+            self.__name = data["name"]
+            self.__age = data["age"]
     @property
-    def description(self):
-        return self.__description
+    def name(self):
+        return self.__name
+    @property
+    def age(self):
+        return self.__age
 
-    #def get_todo_task(self):
-        #return ToDoTask(self.description)
+    def get_intervention(self):
+        return Intervention(self.name,self.age)

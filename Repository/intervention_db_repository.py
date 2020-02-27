@@ -28,10 +28,11 @@ class InterventionDbRepository(InterventionRepository):
         self.__conn.commit()
 
     def save(self, todo_task):
-        insertCmd = f"INSERT INTO TODO(description, status) VALUES('{todo_task.description}', '{todo_task.status}')"
+        insertCmd = f"INSERT INTO INTERVENTION(name, age) VALUES('{todo_task.name}', '{todo_task.age}')"
         self.__execute_commande(insertCmd)
         self.__commit()
         return True
 
     def get_all(self):
-        pass
+        readCmd = f"SELECT * FROM USERS"
+        self.__execute_commande(readCmd)
