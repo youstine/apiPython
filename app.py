@@ -1,33 +1,35 @@
-from flask import Flask, request
-
-from Repository.intervention_db_repository import InterventionDbRepository
-from UseCase.intervention_save_request_object import InterventionSaveRequestObject
-from UseCase.intervention_save_usecase import InterventionSaveUseCase
+from flask import Flask, request, jsonify
+from sqllite import ManageSqlLite
 
 app = Flask(__name__)
 
+app.config["DEBUG"] = True
 
-@app.route('/')
-def hello_world():
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
+
+
+@app.route('/', methods=['GET'])
+def home():
     return 'Bienvenue dans notre api Python'
 
 
-CONNECTION_STRING = "C:\\GUILDE DE DEV\\EPSI\\Python\\Code\\ToDo\\Tests\\todo.db"
+@app.route('/interventions', methods=['GET'])
+def api_all():
+    ManageSqlLite('ma_base.bd')
+    all_interventions = ManageSqlLite.return_liste_record()
+    return jsonify(all_interventions)
 
 
-@app.route("/add", methods=['POST'])
-def add():
-    try:
-        data_task = request.get_json(force=True)
-        task_request = InterventionSaveRequestObject(data_task)
-        # repo = TodoJsonRepository()
-        repo = InterventionDbRepository(CONNECTION_STRING)
-        uc = InterventionSaveUseCase(repo)
-        response = uc.execute(task_request.get_todo_task())
-        return "{}".format(int(response.return_value)), {"Content-Type": "application/plaintext"}
-    except Exception as exc:
-        return str(exc), 400, {}
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return "<h1>404</h1><p>The resource could not be found.</p>", 404
 
 
-if __name__ == '__main__':
+
     app.run()
