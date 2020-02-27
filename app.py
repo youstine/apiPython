@@ -22,12 +22,20 @@ CONNECTION_STRING = CONSTANTE.CONNECTION_STRING
 
 @app.route('/interventions', methods=['GET'])
 def api_all():
-    # On crée une connexion à la bdd
+    # On cree une connexion à la bdd
     repo = InterventionDbRepository(CONNECTION_STRING)
-    #On execute un getAll
+    # On execute un getAll
     all_interventions = repo.get_all()
     return jsonify(all_interventions)
 
+
+@app.route('/interventions/id/<id_intervention>', methods=['GET'])
+def get_intervention_by_id(id_intervention):
+    # On crée une connexion à la bdd
+    repo = InterventionDbRepository(CONNECTION_STRING)
+    # On execute un getAll
+    intervention = repo.get_intervention_by_id(id_intervention)
+    return jsonify(intervention)
 
 @app.route('/test', methods=['POST'])
 def post():
@@ -41,10 +49,10 @@ def post():
         # On save l'objet en bdd?
         uc = InterventionSaveUseCase(repo)
         response = uc.execute(task_request.get_intervention())
-        print(response.return_value)
+        # print(response.return_value)
         return "WORKS"
     except Exception as exc:
-        print("BUG? " + str(exc))
+        # print("BUG? " + str(exc))
         return str(exc), 400, {}
 
 
