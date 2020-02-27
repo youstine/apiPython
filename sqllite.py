@@ -1,5 +1,6 @@
 import sqlite3
 
+
 class ManageSqlLite:
     def __init__(self, baseName):
         self.conn = sqlite3.connect(baseName)
@@ -25,21 +26,34 @@ class ManageSqlLite:
     def commit(self):
         self.conn.commit()
 
-    def insert_person_in_database(self, pers):
-        self.cursor.execute("""INSERT INTO users(name, age) VALUES(:name, :age)""", pers)
+    def insert_interv_in_database(self, interv):
+        self.cursor.execute("""INSERT INTO intervention(name, age) VALUES(:name, :age)""", interv)
+
+    #def insert_tech_in_database(self, tech):
+    #   self.cursor.execute("""INSERT INTO technicien(nomTech, service, number) VALUES(:nomTech, :service, :number)""",
+    #                       tech)
 
 
 bdd = ManageSqlLite("ma_base.db")
-bdd.create_table("users")
-list_person = []
-list_person.append({"name": "Laurent", "age": 46})
-list_person.append({"name": "Greg", "age": 42})
-list_person.append({"name": "Clément", "age": 28})
-for pers in list_person:
-    bdd.insert_person_in_database(pers)
+bdd.create_table("intervention")
+bdd.create_table("technicien")
+
+list_intervention = [{"name": "Laurent", "age": 46}, {"name": "Greg", "age": 42}, {"name": "Clément", "age": 28}]
+for interv in list_intervention:
+    bdd.insert_interv_in_database(interv)
 bdd.commit()
-lst = bdd.return_liste_record("SELECT * FROM users")
-print(lst)
+lstInterv = bdd.return_liste_record("SELECT * FROM intervention")
+print(lstInterv)
+
+#list_technicien = [{"nomTech": "Bernard", "service": "chauffage", "number": "0652255555"},
+                  # {"nomTech": "Nada", "service": "plomberie", "number": "0652255555"}]
+#for tech in list_technicien:
+    #bdd.insert_tech_in_database(tech)
+#bdd.commit()
+
+
+#lstTech = bdd.return_liste_record("SELECT * FROM technicien")
+#print(listTech)
 
 #
 # cursor.execute("""
