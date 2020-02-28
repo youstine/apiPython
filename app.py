@@ -20,7 +20,7 @@ def home():
 
 @app.route('/interventions', methods=['GET'])
 def get_all_interventions():
-    # On crée une connexion à la bdd
+    # On cree une connexion à la bdd
     repo = InterventionDbRepository(CONSTANTE.DB_NAME)
     # On execute un getAll
     all_interventions = repo.get_all()
@@ -29,11 +29,15 @@ def get_all_interventions():
 
 @app.route('/intervention/<id_intervention>', methods=['GET'])
 def get_intervention_by_id(id_intervention):
-    # On crée une connexion à la bdd
-    repo = InterventionDbRepository(CONSTANTE.DB_NAME)
-    # On execute un getAll
-    intervention = repo.get_intervention_by_id(id_intervention)
-    return jsonify(intervention)
+    try:
+        # On crée une connexion à la bdd
+        repo = InterventionDbRepository(CONSTANTE.DB_NAME)
+        # On execute un getAll
+        intervention = repo.get_intervention_by_id(id_intervention)
+        return jsonify(intervention)
+    except Exception as exc:
+        # print("BUG? " + str(exc))
+        return str(exc), 400, {}
 
 
 @app.route('/intervention/create', methods=['POST'])

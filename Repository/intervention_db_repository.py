@@ -43,13 +43,24 @@ class InterventionDbRepository(InterventionRepository):
         return lstRecords
 
     def get_intervention_by_id(self, id_intervention):
-        read_Cmd = f"SELECT * FROM INTERVENTION where id = " + id_intervention
-        self.__execute_commande(read_Cmd)
-        lstRecords = []
-        for row in self.cursor:
-            lstRecords.append(dict_factory(self.cursor, row))
-            # print(lstRecords)
-        return lstRecords
+        print(id_intervention)
+        try:
+            if id_intervention is not int:
+                raise Exception("L'id doit être un nombre")
+            read_Cmd = f"SELECT * FROM INTERVENTION where id = " + id_intervention
+            self.__execute_commande(read_Cmd)
+            lstRecords = []
+            for row in self.cursor:
+                lstRecords.append(dict_factory(self.cursor, row))
+                # print(lstRecords)
+            print(lstRecords)
+            if not lstRecords:
+                raise Exception("L'id " + id_intervention + " n'existe pas")
+            return lstRecords
+        except Exception as exc:
+            # print("BUG? " + str(exc))
+            # return str(exc), 400, {}
+            return str(exc)
 
 def dict_factory(cursor, row):
     d = {}
