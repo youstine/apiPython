@@ -4,9 +4,12 @@ from Repository.intervention_db_repository import InterventionDbRepository
 from UseCase.intervention_save_request_object import InterventionSaveRequestObject
 from UseCase.intervention_save_usecase import InterventionSaveUseCase
 from constantes import CONSTANTE
+from init_sqlite_db import ManageSqlLite
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
+db = ManageSqlLite(CONSTANTE.DB_NAME)
+db.db_creation()
 
 
 @app.route('/', methods=['GET'])
@@ -15,7 +18,6 @@ def home():
 
 
 @app.route('/interventions', methods=['GET'])
-
 def get_all_interventions():
     # On crée une connexion à la bdd
     repo = InterventionDbRepository(CONSTANTE.CONNECTION_STRING)
@@ -24,14 +26,14 @@ def get_all_interventions():
     return jsonify(all_interventions)
 
 
-
 @app.route('/interventions/id/<id_intervention>', methods=['GET'])
 def get_intervention_by_id(id_intervention):
     # On crée une connexion à la bdd
-    repo = InterventionDbRepository(CONSTANTE.CONNECTION_STRING)
+    repo = InterventionDbRepository(CONSTANTE.DB_NAME)
     # On execute un getAll
     intervention = repo.get_intervention_by_id(id_intervention)
     return jsonify(intervention)
+
 
 @app.route('/createIntervention', methods=['POST'])
 def post_intervention():
@@ -41,7 +43,7 @@ def post_intervention():
         # On le passe dans le validateur
         request_object = InterventionSaveRequestObject(request_content)
         # On crée une connexion à la bdd
-        repo = InterventionDbRepository(CONSTANTE.CONNECTION_STRING)
+        repo = InterventionDbRepository(CONSTANTE.DB_NAME)
         # On instancie une requête
         uc = InterventionSaveUseCase(repo)
         # On retourne le résultat de l'execution de la requête

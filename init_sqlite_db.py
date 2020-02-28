@@ -1,5 +1,7 @@
 import sqlite3
 
+from constantes import CONSTANTE
+
 
 class ManageSqlLite:
     def __init__(self, base_name):
@@ -37,18 +39,12 @@ class ManageSqlLite:
         self.cursor.execute("""INSERT INTO intervention(client_name, tech_name, intervention_date, intervention_type, 
         description) VALUES(:client_name, :tech_name, :intervention_date, :intervention_type, :description)""", interv)
 
+    def db_creation(self):
+        list_intervention = CONSTANTE.MOCK_DATA
+        bdd = ManageSqlLite(CONSTANTE.DB_NAME)
+        bdd.drop_table(CONSTANTE.TABLE_NAME)
+        bdd.create_table(CONSTANTE.TABLE_NAME)
+        for interv in list_intervention:
+            bdd.insert_interv_in_database(interv)
+        bdd.commit()
 
-list_intervention = [
-    {"client_name": "Laurent", "tech_name": "Bob", "intervention_date": "2020/11/01", "intervention_type": "réparation",
-     "description": "Le client à une fuite avec sa machine à laver"},
-    {"client_name": "Natacha", "tech_name": "Dorian", "intervention_date": "2020/06/23",
-     "intervention_type": "diagnostique",
-     "description": "Le client demande une intervention pour vérifier son lave vaisselle"}
-]
-
-bdd = ManageSqlLite("ma_base.db")
-bdd.drop_table("intervention")
-bdd.create_table("intervention")
-for interv in list_intervention:
-    bdd.insert_interv_in_database(interv)
-bdd.commit()
