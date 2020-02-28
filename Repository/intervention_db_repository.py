@@ -41,7 +41,7 @@ class InterventionDbRepository(InterventionRepository):
             for row in self.cursor:
                 lstRecords.append(dict_factory(self.cursor, row))
             if len(lstRecords) <= 0:
-                raise Exception("BROKEN LIST")
+                raise Exception(CONSTANTE.GET_ALL_EMPTY_LIST)
             return lstRecords
         except Exception as exc:
             raise exc
