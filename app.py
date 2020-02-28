@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 
 from Repository.intervention_db_repository import InterventionDbRepository
-from UseCase.intervention_save_request_object import InterventionSaveRequestObject
+from UseCase.intervention_validator import InterventionValidatorObject
 from UseCase.intervention_save_usecase import InterventionSaveUseCase
 from constantes import CONSTANTE
 from init_sqlite_db import ManageSqlLite
@@ -35,23 +35,21 @@ def get_intervention_by_id(id_intervention):
     return jsonify(intervention)
 
 
-@app.route('/createIntervention', methods=['POST'])
+@app.route('/intervention/create', methods=['POST'])
 def post_intervention():
     try:
-        print(request)
         # On récupère le json de la requête
         request_content = request.get_json()
         # On le passe dans le validateur
-        request_object = InterventionSaveRequestObject(request_content)
+        request_object = InterventionValidatorObject(request_content)
         # On crée une connexion à la bdd
         repo = InterventionDbRepository(CONSTANTE.DB_NAME)
         # On instancie une requête
         uc = InterventionSaveUseCase(repo)
         # On retourne le résultat de l'execution de la requête
-        return str(uc.execute(InterventionSaveRequestObject.get_intervention(request_object)))
+        return str(uc.execute(InterventionValidatorObject.get_intervention(request_object)))
     except Exception as exc:
         # print("BUG? " + str(exc))
-        print("Error : " + str(exc))
         return str(exc), 400, {}
 
 

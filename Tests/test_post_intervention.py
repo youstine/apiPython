@@ -18,7 +18,7 @@ class TestPost_intervention(TestCase):
             "description": "changement de micro-ondes"
         }
 
-        response = self.app.post('/createIntervention',
+        response = self.app.post('/intervention/create',
                                  data=json.dumps(intervention),
                                  content_type='application/json')
 

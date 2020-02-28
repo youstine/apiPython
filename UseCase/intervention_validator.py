@@ -1,7 +1,7 @@
-from Domain.intervention import Intervention
+from Models.intervention import Intervention
 
 
-class InterventionSaveRequestObject:
+class InterventionValidatorObject:
     def __init__(self, data):
         if "client_name" not in data:
             raise Exception("Le nom du client est manquant (client_name)")
