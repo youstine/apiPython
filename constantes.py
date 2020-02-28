@@ -12,3 +12,4 @@ class CONSTANTE:
 
     TABLE_NAME = "intervention"
     INTERV_VALID_ERROR = "Champ manquant ou incomplet: "
+    GET_ALL_EMPTY_LIST = "Aucune intervention n'est disponible"

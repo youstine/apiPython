@@ -1,6 +1,7 @@
 import sqlite3
 
 from Repository.intervention_repository import InterventionRepository
+from constantes import CONSTANTE
 
 
 class InterventionDbRepository(InterventionRepository):
@@ -23,7 +24,6 @@ class InterventionDbRepository(InterventionRepository):
     def __execute_commande(self, sqlCommand):
         self.__cursor.execute(sqlCommand)
 
-
     def __commit(self):
         self.__conn.commit()
 
@@ -34,13 +34,17 @@ class InterventionDbRepository(InterventionRepository):
         return True
 
     def get_all(self):
-        readCmd = f"SELECT * FROM INTERVENTION"
-        self.__execute_commande(readCmd)
-        lstRecords = []
-        for row in self.cursor:
-            lstRecords.append(dict_factory(self.cursor, row))
-            # print(lstRecords)
-        return lstRecords
+        try:
+            readCmd = f"SELECT * FROM INTERVENTION"
+            self.__execute_commande(readCmd)
+            lstRecords = []
+            for row in self.cursor:
+                lstRecords.append(dict_factory(self.cursor, row))
+            if len(lstRecords) <= 0:
+                raise Exception("BROKEN LIST")
+            return lstRecords
+        except Exception as exc:
+            raise exc
 
     def get_intervention_by_id(self, id_intervention):
         print(id_intervention)
@@ -61,6 +65,7 @@ class InterventionDbRepository(InterventionRepository):
             # print("BUG? " + str(exc))
             # return str(exc), 400, {}
             return str(exc)
+
 
 def dict_factory(cursor, row):
     d = {}
