@@ -11,3 +11,4 @@ class CONSTANTE:
     ]
 
     TABLE_NAME = "intervention"
+    INTERV_VALID_ERROR = "Champ manquant ou incomplet: "
