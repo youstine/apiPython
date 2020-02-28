@@ -12,3 +12,6 @@ class CONSTANTE:
 
     TABLE_NAME = "intervention"
     INTERV_VALID_ERROR = "Champ manquant ou incomplet: "
+
+    ERROR_ID = "Aucune intervention n'a été trouvée avec l'id: "
+    ERROR_ID_NOT_INT = "L'id doit être un nombre"

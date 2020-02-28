@@ -1,6 +1,7 @@
 import sqlite3
 
 from Repository.intervention_repository import InterventionRepository
+from constantes import CONSTANTE
 
 
 class InterventionDbRepository(InterventionRepository):
@@ -23,7 +24,6 @@ class InterventionDbRepository(InterventionRepository):
     def __execute_commande(self, sqlCommand):
         self.__cursor.execute(sqlCommand)
 
-
     def __commit(self):
         self.__conn.commit()
 
@@ -45,22 +45,19 @@ class InterventionDbRepository(InterventionRepository):
     def get_intervention_by_id(self, id_intervention):
         print(id_intervention)
         try:
-            if id_intervention is not int:
-                raise Exception("L'id doit être un nombre")
+            if id_intervention.isdigit() == False:
+                raise Exception(CONSTANTE.ERROR_ID_NOT_INT)
             read_Cmd = f"SELECT * FROM INTERVENTION where id = " + id_intervention
             self.__execute_commande(read_Cmd)
             lstRecords = []
             for row in self.cursor:
                 lstRecords.append(dict_factory(self.cursor, row))
-                # print(lstRecords)
-            print(lstRecords)
             if not lstRecords:
-                raise Exception("L'id " + id_intervention + " n'existe pas")
+                raise Exception(CONSTANTE.ERROR_ID + id_intervention)
             return lstRecords
         except Exception as exc:
-            # print("BUG? " + str(exc))
-            # return str(exc), 400, {}
-            return str(exc)
+            raise exc
+
 
 def dict_factory(cursor, row):
     d = {}
