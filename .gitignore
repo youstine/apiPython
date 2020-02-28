@@ -1,9 +1,9 @@
 /venv
 /.idea
 *.db
-# Domain/__pycache__
-# Repository/__pycache__
-# UseCase/__pycache__
-# __pycache__
+ Domain/__pycache__
+ Repository/__pycache__
+ UseCase/__pycache__
+ __pycache__
 Models/.DS_Store
 Repository/.DS_Store
