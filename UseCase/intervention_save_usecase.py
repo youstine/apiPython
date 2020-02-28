@@ -1,5 +1,4 @@
 from Repository.intervention_repository import InterventionRepository
-from UseCase.intervention_save_response_object import InterventionSaveResponseObject
 
 
 class InterventionSaveUseCase:

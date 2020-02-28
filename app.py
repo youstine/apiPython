@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 
-from Domain.intervention import Intervention
 from Repository.intervention_db_repository import InterventionDbRepository
 from UseCase.intervention_save_request_object import InterventionSaveRequestObject
 from UseCase.intervention_save_usecase import InterventionSaveUseCase
