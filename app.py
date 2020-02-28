@@ -5,6 +5,7 @@ from UseCase.intervention_validator import InterventionValidatorObject
 from UseCase.intervention_save_usecase import InterventionSaveUseCase
 from constantes import CONSTANTE
 from init_sqlite_db import ManageSqlLite
+import json
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -42,12 +43,15 @@ def post_intervention():
         request_content = request.get_json()
         # On le passe dans le validateur
         request_object = InterventionValidatorObject(request_content)
+        # On transforme le json en objet Intervention
+        intervention = InterventionValidatorObject.get_intervention(request_object)
         # On crée une connexion à la bdd
         repo = InterventionDbRepository(CONSTANTE.DB_NAME)
         # On instancie une requête
         uc = InterventionSaveUseCase(repo)
         # On retourne le résultat de l'execution de la requête
-        return str(uc.execute(InterventionValidatorObject.get_intervention(request_object)))
+        uc.execute(intervention)
+        return f"intervention créée: <br/> {intervention.to_dict()}"
     except Exception as exc:
         # print("BUG? " + str(exc))
         return str(exc), 400, {}

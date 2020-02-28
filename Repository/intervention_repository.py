@@ -1,5 +1,6 @@
 import abc
 
+
 class InterventionRepository(abc.ABC):
 
     @abc.abstractmethod
