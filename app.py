@@ -39,12 +39,14 @@ def post_intervention():
     try:
         # On récupère le json de la requête
         request_content = request.get_json()
+        # On le passe dans le validateur
+        request_object = InterventionSaveRequestObject(request_content)
         # On crée une connexion à la bdd
         repo = InterventionDbRepository(CONSTANTE.CONNECTION_STRING)
         # On instancie une requête
         uc = InterventionSaveUseCase(repo)
         # On retourne le résultat de l'execution de la requête
-        return str(uc.execute(Intervention(request_content)))
+        return str(uc.execute(InterventionSaveRequestObject.get_intervention(request_object)))
     except Exception as exc:
         # print("BUG? " + str(exc))
         print("Error : " + str(exc))

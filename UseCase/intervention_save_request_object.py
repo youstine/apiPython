@@ -20,14 +20,5 @@ class InterventionSaveRequestObject:
             self.intervention_type = data["intervention_type"]
             self.description = data["description"]
 
-    def to_dict(self):
-        return {
-            "client_name": self.__client_name,
-            "tech_name":self.__tech_name,
-            "intervention_date": str(self.__intervention_date),
-            "intervention_type": self.__intervention_type,
-            "description":self.__description
-        }
-
     def get_intervention(self):
         return Intervention(self);

@@ -12,12 +12,12 @@ class ManageSqlLite:
 
     def create_table(self, table_name):
         sql_cmd = f"CREATE TABLE IF NOT EXISTS {table_name}(" \
-                 f" id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE," \
-                 f" client_name TEXT," \
-                 f" tech_name TEXT," \
-                 f" intervention_date DATE," \
-                 f" intervention_type TEXT," \
-                 f" description TEXT)"
+                  f" id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE," \
+                  f" client_name TEXT," \
+                  f" tech_name TEXT," \
+                  f" intervention_date DATE," \
+                  f" intervention_type TEXT," \
+                  f" description TEXT)"
         self.execute_commande(sql_cmd)
 
     def execute_commande(self, sql_command):
@@ -38,12 +38,11 @@ class ManageSqlLite:
         description) VALUES(:client_name, :tech_name, :intervention_date, :intervention_type, :description)""", interv)
 
 
-
-
 list_intervention = [
     {"client_name": "Laurent", "tech_name": "Bob", "intervention_date": "2020/11/01", "intervention_type": "réparation",
      "description": "Le client à une fuite avec sa machine à laver"},
-    {"client_name": "Natacha", "tech_name": "Dorian", "intervention_date": "2020/06/23", "intervention_type": "diagnostique",
+    {"client_name": "Natacha", "tech_name": "Dorian", "intervention_date": "2020/06/23",
+     "intervention_type": "diagnostique",
      "description": "Le client demande une intervention pour vérifier son lave vaisselle"}
 ]
 
