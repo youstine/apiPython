@@ -38,6 +38,7 @@ def get_intervention_by_id(id_intervention):
 @app.route('/createIntervention', methods=['POST'])
 def post_intervention():
     try:
+        print(request)
         # On récupère le json de la requête
         request_content = request.get_json()
         # On le passe dans le validateur
