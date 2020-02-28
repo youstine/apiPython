@@ -30,7 +30,6 @@ class TestGet_intervention_by_id(TestCase):
         result = json.loads(response.data)[0]
         print(result)
         # assert
-        # self.assertEqual(response.status_code, 200)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result, result_read)
-        # self.fail()
+
