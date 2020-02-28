@@ -20,13 +20,13 @@ def home():
 @app.route('/interventions', methods=['GET'])
 def get_all_interventions():
     # On crée une connexion à la bdd
-    repo = InterventionDbRepository(CONSTANTE.CONNECTION_STRING)
+    repo = InterventionDbRepository(CONSTANTE.DB_NAME)
     # On execute un getAll
     all_interventions = repo.get_all()
     return jsonify(all_interventions)
 
 
-@app.route('/interventions/id/<id_intervention>', methods=['GET'])
+@app.route('/intervention/<id_intervention>', methods=['GET'])
 def get_intervention_by_id(id_intervention):
     # On crée une connexion à la bdd
     repo = InterventionDbRepository(CONSTANTE.DB_NAME)
