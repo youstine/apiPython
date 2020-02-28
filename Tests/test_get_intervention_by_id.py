@@ -30,6 +30,6 @@ class TestGet_intervention_by_id(TestCase):
         result = json.loads(response.data)[0]
         print(result)
         # assert
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(result, result_read)
+        self.assertEqual(response.status_code, 200, f"test_get_by_id : Réponse attendue: 200, réponse reçue: {response.status_code}")
+        self.assertEqual(result, result_read, "test_get_by_id: Le résultat de la base de données ne correspond pas à celui recherché")
 

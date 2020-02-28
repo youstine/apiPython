@@ -24,12 +24,12 @@ class TestPost_intervention(TestCase):
 
         intervention_list = self.app.get('/interventions')
         getall_response = json.loads(intervention_list.data)[-1]
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(getall_response["client_name"], intervention["client_name"])
-        self.assertEqual(getall_response["tech_name"], intervention["tech_name"])
-        self.assertEqual(getall_response["intervention_date"], intervention["intervention_date"])
-        self.assertEqual(getall_response["intervention_type"], intervention["intervention_type"])
-        self.assertEqual(getall_response["description"], intervention["description"])
+        self.assertEqual(response.status_code, 200, f"test_post : Réponse attendue: 200, réponse reçue: {response.status_code}")
+        self.assertEqual(getall_response["client_name"], intervention["client_name"], "test_post_intervention: Le dernier enregistrement de la base de donnéees ne correspond pas à l'entrée")
+        self.assertEqual(getall_response["tech_name"], intervention["tech_name"], "test_post_intervention: Le dernier enregistrement de la base de donnéees ne correspond pas à l'entrée")
+        self.assertEqual(getall_response["intervention_date"], intervention["intervention_date"], "test_post_intervention: Le dernier enregistrement de la base de donnéees ne correspond pas à l'entrée")
+        self.assertEqual(getall_response["intervention_type"], intervention["intervention_type"], "test_post_intervention: Le dernier enregistrement de la base de donnéees ne correspond pas à l'entrée")
+        self.assertEqual(getall_response["description"], intervention["description"], "test_post_intervention: Le dernier enregistrement de la base de donnéees ne correspond pas à l'entrée")
 
 
 
