@@ -34,13 +34,17 @@ class InterventionDbRepository(InterventionRepository):
         return True
 
     def get_all(self):
-        readCmd = f"SELECT * FROM INTERVENTION"
-        self.__execute_commande(readCmd)
-        lstRecords = []
-        for row in self.cursor:
-            lstRecords.append(dict_factory(self.cursor, row))
-            # print(lstRecords)
-        return lstRecords
+        try:
+            readCmd = f"SELECT * FROM INTERVENTION"
+            self.__execute_commande(readCmd)
+            lstRecords = []
+            for row in self.cursor:
+                lstRecords.append(dict_factory(self.cursor, row))
+            if len(lstRecords) <= 0:
+                raise Exception(CONSTANTE.GET_ALL_EMPTY_LIST)
+            return lstRecords
+        except Exception as exc:
+            raise exc
 
     def get_intervention_by_id(self, id_intervention):
         print(id_intervention)
@@ -57,6 +61,7 @@ class InterventionDbRepository(InterventionRepository):
             return lstRecords
         except Exception as exc:
             raise exc
+
 
 
 def dict_factory(cursor, row):
