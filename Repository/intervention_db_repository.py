@@ -44,7 +44,6 @@ class InterventionDbRepository(InterventionRepository):
 
     def get_intervention_by_id(self, id_intervention):
         read_Cmd = f"SELECT * FROM INTERVENTION where id = " + id_intervention
-        print("requete pour l'id =======", read_Cmd, "l'id de l'intervention", id_intervention)
         self.__execute_commande(read_Cmd)
         lstRecords = []
         for row in self.cursor:
